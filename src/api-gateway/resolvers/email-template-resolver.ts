@@ -122,4 +122,12 @@ export class EmailTemplateResolver {
     await emailTemplateService.send(args);
     return "OK";
   }
+
+  @Query(() => String)
+  async renderHtml(
+    @Args() args: SendRequest,
+    @Ctx() { service: { emailTemplateService } }: IContext
+  ): Promise<string> {
+    return emailTemplateService.renderHtml(args);
+  }
 }

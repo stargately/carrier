@@ -9,6 +9,7 @@ import { ScrollToTop } from "@/shared/common/scroll-top";
 import { fonts } from "@/shared/common/styles/style-font";
 import { TopBar } from "@/shared/common/top-bar";
 import { Home } from "@/shared/home/home";
+import { TemplateManagerController } from "./template-manager/template-manager-controller";
 
 const initGoogleAnalytics = require("./common/google-analytics");
 
@@ -29,6 +30,9 @@ export function App(props: Props): JSX.Element {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/templates">
+              <TemplateManagerController />
             </Route>
             <Route path="*">
               <NotFound />

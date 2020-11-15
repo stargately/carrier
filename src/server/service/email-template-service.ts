@@ -133,4 +133,14 @@ export class EmailTemplateService {
       html: mjml2html(buildMjml(template, args.payload as DataPayload)).html,
     });
   }
+
+  async renderHtml(args: SendArgs): Promise<string> {
+    const template = await this.deps.model.emailTemplate.findOne({
+      id: args.templateId,
+    });
+    if (!template) {
+      throw new ValidationError("invalid templateId");
+    }
+    return mjml2html(buildMjml(template, args.payload as DataPayload)).html;
+  }
 }

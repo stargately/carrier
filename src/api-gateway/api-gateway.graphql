@@ -42,6 +42,12 @@ type Mutation {
 
 type Query {
   emailTemplates: [EmailTemplate!]!
+  renderHtml(
+    templateId: String!
+    email: String!
+    idempotencyKey: String
+    payload: JSONObject
+  ): String!
 
   # is the server healthy?
   health: String!
