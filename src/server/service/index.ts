@@ -1,0 +1,1 @@
+export { setService } from "./service";

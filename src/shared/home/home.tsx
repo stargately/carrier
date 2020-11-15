@@ -8,7 +8,6 @@ import Layout from "antd/lib/layout";
 import { assetURL } from "onefx/lib/asset-url";
 import { styled } from "onefx/lib/styletron-react";
 import { connect } from "react-redux";
-import { AddOneController } from "@/shared/add-one";
 
 const ExampleButton = styled("button", ({ $theme }) => {
   return {
@@ -76,9 +75,6 @@ export const Home = connect(
               >
                 Toggle {props.themeCode === "dark" ? "light" : "dark"} mode
               </ExampleButton>
-            </Row>
-            <Row justify="center">
-              <AddOneController />
             </Row>
           </StyledContent>
         </Layout>

@@ -3,12 +3,45 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type EmailTemplate {
+  id: ID!
+  description: String!
+  fromEmail: String
+  replyToEmail: String
+  subject: String
+  plainTextBody: String
+  mainContent: String
+  mainCta: String
+  secondaryContent: String
+  secondaryCta: String
+}
+
+# The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSONObject
+
 type Mutation {
-  addNum(inc: Int!): Int!
+  upsertEmailTemplate(
+    id: String!
+    description: String!
+    fromEmail: String
+    replyToEmail: String
+    subject: String
+    plainTextBody: String
+    mainContent: String
+    mainCta: String
+    secondaryContent: String
+    secondaryCta: String
+  ): EmailTemplate
+  send(
+    templateId: String!
+    email: String!
+    idempotencyKey: String
+    payload: JSONObject
+  ): String!
 }
 
 type Query {
-  currentNum: Int!
+  emailTemplates: [EmailTemplate!]!
 
   # is the server healthy?
   health: String!

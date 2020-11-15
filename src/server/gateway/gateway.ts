@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import { MyServer } from "@/server/start-server";
+import sgMail from "@sendgrid/mail";
 
 export type Gateways = {
   mongoose: mongoose.Mongoose;
+  sgMail: typeof sgMail;
 };
 
 export function setGateways(server: MyServer): void {
@@ -20,4 +22,6 @@ export function setGateways(server: MyServer): void {
       });
     server.gateways.mongoose = mongoose;
   }
+
+  server.gateways.sgMail = sgMail;
 }

@@ -7,7 +7,7 @@ module.exports = {
   project: "web-onefx-boilerplate",
   server: {
     routePrefix,
-    port: process.env.PORT || 5000,
+    port: process.env.PORT || 4109,
     proxy: false,
     staticDir: "./dist",
     delayInitMiddleware: false,

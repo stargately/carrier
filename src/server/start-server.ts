@@ -1,7 +1,8 @@
 import config from "config";
 import { Config, Server } from "onefx/lib/server";
-import { setModel } from "@/model";
+import { Model, setModel } from "@/model";
 import { OnefxAuth, authConfig } from "onefx-auth";
+import { Service, setService } from "@/server/service/service";
 import { Gateways, setGateways } from "./gateway/gateway";
 import { setMiddleware } from "./middleware";
 import { setServerRoutes } from "./server-routes";
@@ -18,8 +19,8 @@ export type MyServer = Server & {
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvers: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  model: any;
+  model: Model;
+  service: Service;
 };
 
 export async function startServer(): Promise<Server> {
@@ -30,6 +31,7 @@ export async function startServer(): Promise<Server> {
   server.auth = new OnefxAuth(server.gateways.mongoose, authConfig);
   setMiddleware(server);
   setModel(server);
+  setService(server);
   setServerRoutes(server);
 
   const port = Number(process.env.PORT || config.get("server.port"));
