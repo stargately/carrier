@@ -131,6 +131,7 @@ export class EmailTemplateService {
       from: { email: template.fromEmail, name: "daommo.com" },
       subject: template.subject,
       html: mjml2html(buildMjml(template, args.payload as DataPayload)).html,
+      text: template.plainTextBody,
     });
   }
 

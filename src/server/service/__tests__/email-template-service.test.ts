@@ -12,6 +12,7 @@ import {
   testDataPayload,
   testHydrated,
 } from "@/server/service/__tests__/email-template-test-data";
+import mjml2html from "mjml";
 
 test("lines to wrapped html", async (t) => {
   const hydrated = formatString(testBlock, testDataPayload);
@@ -42,6 +43,8 @@ test("build template", async (t) => {
 
   fs.writeFileSync(`${__dirname}/output-template.mjml`, mjml);
   t.truthy(mjml);
+
+  fs.writeFileSync(`${__dirname}/output-template.html`, mjml2html(mjml).html);
 });
 
 test("parseCta", async (t) => {
