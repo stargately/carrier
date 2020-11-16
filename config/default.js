@@ -4,7 +4,7 @@ config();
 const routePrefix = "";
 
 module.exports = {
-  project: "web-onefx-boilerplate",
+  project: "carrier",
   server: {
     routePrefix,
     port: process.env.PORT || 4109,

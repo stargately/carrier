@@ -8,6 +8,7 @@ import {
   ObjectType,
   Query,
   Resolver,
+  Authorized,
 } from "type-graphql";
 import { EmailTemplateDoc } from "@/model/email-template-model";
 import { IContext } from "@/api-gateway/api-gateway";
@@ -95,6 +96,7 @@ class SendRequest {
 
 @Resolver()
 export class EmailTemplateResolver {
+  @Authorized()
   @Query(() => [EmailTemplate])
   async emailTemplates(
     @Ctx() { model: { emailTemplate } }: IContext
@@ -102,6 +104,7 @@ export class EmailTemplateResolver {
     return emailTemplate.find({});
   }
 
+  @Authorized()
   @Mutation(() => EmailTemplate, { nullable: true })
   async upsertEmailTemplate(
     @Args() args: UpsertEmailTemplateRequest,
@@ -114,6 +117,7 @@ export class EmailTemplateResolver {
     );
   }
 
+  @Authorized()
   @Mutation(() => String)
   async send(
     @Args() args: SendRequest,
@@ -123,6 +127,7 @@ export class EmailTemplateResolver {
     return "OK";
   }
 
+  @Authorized()
   @Query(() => String)
   async renderHtml(
     @Args() args: SendRequest,

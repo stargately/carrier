@@ -8,6 +8,7 @@ import { Gateways } from "@/server/gateway/gateway";
 import { Model } from "@/model";
 import { EmailTemplateResolver } from "@/api-gateway/resolvers/email-template-resolver";
 import { Service } from "@/server/service/service";
+import { customAuthChecker } from "@/api-gateway/auth-checker";
 import { MetaResolver } from "./resolvers/meta-resolver";
 
 export interface IContext {
@@ -28,6 +29,7 @@ export async function setApiGateway(server: MyServer): Promise<void> {
   const sdlPath = path.resolve(__dirname, "api-gateway.graphql");
   const schema = await buildSchema({
     resolvers,
+    authChecker: customAuthChecker,
     emitSchemaFile: {
       path: sdlPath,
       commentDescriptions: true,

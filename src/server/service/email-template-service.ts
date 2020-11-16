@@ -128,7 +128,7 @@ export class EmailTemplateService {
     this.deps.gateways.sgMail.setApiKey(getEnvVar("SENDGRID_API_TOKEN", ""));
     await this.deps.gateways.sgMail.send({
       to: args.email,
-      from: { email: template.fromEmail, name: "daommo.com" },
+      from: { email: template.fromEmail },
       subject: template.subject,
       html: mjml2html(buildMjml(template, args.payload as DataPayload)).html,
       text: template.plainTextBody,

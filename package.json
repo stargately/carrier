@@ -1,5 +1,5 @@
 {
-  "name": "web-onefx-boilerplate",
+  "name": "carrier",
   "version": "1.1.0",
   "description": "field_description",
   "main": "server.js",
@@ -165,6 +165,7 @@
     "@types/validator": "13.1.0",
     "antd": "4.6.3",
     "apollo-link-timeout": "2.0.1",
+    "apollo-server-errors": "^2.4.2",
     "apollo-server-koa": "2.17.0",
     "axios": "0.20.0",
     "babel-loader": "8.1.0",
@@ -191,6 +192,7 @@
     "mongoose": "5.10.5",
     "onefx": "^2.6.0",
     "onefx-auth": "2.4.3",
+    "polished": "^4.0.3",
     "process": "0.11.10",
     "react": "16.13.1",
     "react-apollo": "4.0.0-beta.1",
