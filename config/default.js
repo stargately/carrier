@@ -43,7 +43,7 @@ module.exports = {
     "connect-src": [
       "self",
       "https://www.google-analytics.com/",
-      ...(process.env.API_GATEWAY_URL ? [process.env.API_GATEWAY_URL] : []),
+      "https://carrier.onrender.com/carrier/api-gateway/",
     ],
     "child-src": ["self"],
     "font-src": ["self", "data:", "https://fonts.gstatic.com/"],
