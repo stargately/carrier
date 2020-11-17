@@ -30,13 +30,19 @@ export function setServerRoutes(server: MyServer): void {
     }
   );
 
-  server.get("SPA", /^(?!\/?api-gateway\/).+$/, async (ctx: Context) => {
-    ctx.setState("base.nonce", ctx.state.nonce);
+  server.get(
+    "SPA",
+    new RegExp(
+      `^(?!\\/?${server.config.server.routePrefix}/api-gateway\\/).+$`
+    ),
+    async (ctx: Context) => {
+      ctx.setState("base.nonce", ctx.state.nonce);
 
-    ctx.body = await apolloSSR(ctx, {
-      VDom: <AppContainer />,
-      reducer: noopReducer,
-      clientScript: "/main.js",
-    });
-  });
+      ctx.body = await apolloSSR(ctx, {
+        VDom: <AppContainer />,
+        reducer: noopReducer,
+        clientScript: "/main.js",
+      });
+    }
+  );
 }
