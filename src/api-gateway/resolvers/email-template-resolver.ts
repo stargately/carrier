@@ -13,6 +13,7 @@ import {
 import { EmailTemplateDoc } from "@/model/email-template-model";
 import { IContext } from "@/api-gateway/api-gateway";
 import { GraphQLJSONObject } from "graphql-type-json";
+import { AuthenticationError } from "apollo-server-errors";
 
 @ObjectType()
 class EmailTemplate extends EmailTemplateDoc {
@@ -117,12 +118,24 @@ export class EmailTemplateResolver {
     );
   }
 
-  @Authorized()
   @Mutation(() => String)
   async send(
     @Args() args: SendRequest,
-    @Ctx() { service: { emailTemplateService } }: IContext
+    @Ctx()
+    {
+      service: { emailTemplateService },
+      model: { apiTokens },
+      userId,
+      reqHeaders,
+    }: IContext
   ): Promise<string> {
+    if (!userId) {
+      const token = String(reqHeaders.authorization).replace("Bearer ", "");
+      const found = await apiTokens.findOne({ carrierToken: token });
+      if (!found) {
+        throw new AuthenticationError("invalid carrier token");
+      }
+    }
     await emailTemplateService.send(args);
     return "OK";
   }

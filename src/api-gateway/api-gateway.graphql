@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type ApiTokens {
+  _id: String
+  sendgridApiKey: String
+  carrierToken: String
+}
+
 type EmailTemplate {
   id: ID!
   description: String!
@@ -38,6 +44,11 @@ type Mutation {
     idempotencyKey: String
     payload: JSONObject
   ): String!
+  upsertApiTokens(
+    _id: String!
+    sendgridApiKey: String
+    carrierToken: String
+  ): ApiTokens
 }
 
 type Query {
@@ -48,6 +59,7 @@ type Query {
     idempotencyKey: String
     payload: JSONObject
   ): String!
+  apiTokens: ApiTokens!
 
   # is the server healthy?
   health: String!

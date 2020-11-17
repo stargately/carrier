@@ -9,6 +9,7 @@ import { Model } from "@/model";
 import { EmailTemplateResolver } from "@/api-gateway/resolvers/email-template-resolver";
 import { Service } from "@/server/service/service";
 import { customAuthChecker } from "@/api-gateway/auth-checker";
+import { ApiTokensResolver } from "@/shared/api-tokens/api-tokens-resolver";
 import { MetaResolver } from "./resolvers/meta-resolver";
 
 export interface IContext {
@@ -23,7 +24,7 @@ export interface IContext {
 }
 
 export async function setApiGateway(server: MyServer): Promise<void> {
-  const resolvers = [MetaResolver, EmailTemplateResolver];
+  const resolvers = [MetaResolver, EmailTemplateResolver, ApiTokensResolver];
   server.resolvers = resolvers;
 
   const sdlPath = path.resolve(__dirname, "api-gateway.graphql");
@@ -40,7 +41,11 @@ export async function setApiGateway(server: MyServer): Promise<void> {
   const apollo = new ApolloServer({
     schema,
     introspection: true,
-    playground: true,
+    playground: {
+      settings: {
+        "request.credentials": "include",
+      },
+    },
     context: async ({ ctx }): Promise<IContext> => {
       const token = server.auth.tokenFromCtx(ctx);
       const userId = await server.auth.jwt.verify(token);

@@ -1,7 +1,13 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  modelOptions,
+  prop,
+  Ref,
+} from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { UserModel, TUser as User } from "onefx-auth/lib/model/user-model";
 
+@modelOptions({ options: { customName: "email_templates" } })
 export class EmailTemplateDoc extends TimeStamps {
   @prop({ unique: true })
   id: string;

@@ -3,13 +3,11 @@ import React, { useEffect } from "react";
 import Form from "antd/lib/form";
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
-import { useUpsertEmailTemplate } from "@/shared/template-manager/hooks/use-upsert-email-template";
-import { ContentPadding } from "@/shared/common/styles/style-padding";
 import TextArea from "antd/lib/input/TextArea";
 import notification from "antd/lib/notification";
 import Row from "antd/lib/grid/row";
 import Col from "antd/lib/grid/col";
-import { CommonMargin } from "../common/common-margin";
+import { useUpsertEmailTemplate } from "@/shared/template-manager/hooks/use-upsert-email-template";
 
 const layout = {
   labelCol: { span: 4 },
@@ -37,20 +35,11 @@ export const TemplateManagerController: React.FC = () => {
   };
 
   return (
-    <ContentPadding>
-      <CommonMargin />
-
-      <h1>Template Manager</h1>
-
+    <>
       <Row gutter={8}>
         <Col span={12}>
           <Form {...layout} onFinish={onFinish} form={form}>
-            <Form.Item
-              name="id"
-              label="id"
-              hidden={true}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name="id" label="id" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
             <Form.Item
@@ -96,6 +85,6 @@ export const TemplateManagerController: React.FC = () => {
           <div dangerouslySetInnerHTML={{ __html: html || "" }} />
         </Col>
       </Row>
-    </ContentPadding>
+    </>
   );
 };
