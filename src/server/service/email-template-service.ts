@@ -3,7 +3,6 @@ import { EmailTemplateModel } from "@/model/email-template-model";
 import { ValidationError } from "apollo-server-koa";
 import sgMail from "@sendgrid/mail";
 import mjml2html from "mjml";
-import { getEnvVar } from "onefx/lib/env-var";
 
 export function formatString(
   str?: string,
@@ -118,14 +117,14 @@ export class EmailTemplateService {
     this.deps = deps;
   }
 
-  async send(args: SendArgs): Promise<void> {
+  async send(args: SendArgs, sgApiKey: string): Promise<void> {
     const template = await this.deps.model.emailTemplate.findOne({
       id: args.templateId,
     });
     if (!template) {
       throw new ValidationError("invalid templateId");
     }
-    this.deps.gateways.sgMail.setApiKey(getEnvVar("SENDGRID_API_TOKEN", ""));
+    this.deps.gateways.sgMail.setApiKey(sgApiKey);
     await this.deps.gateways.sgMail.send({
       to: args.email,
       from: { email: template.fromEmail },

@@ -13,7 +13,8 @@ import {
 import { EmailTemplateDoc } from "@/model/email-template-model";
 import { IContext } from "@/api-gateway/api-gateway";
 import { GraphQLJSONObject } from "graphql-type-json";
-import { AuthenticationError } from "apollo-server-errors";
+import { AuthenticationError, ValidationError } from "apollo-server-errors";
+import { ApiTokensDoc } from "@/shared/api-tokens/api-tokens-model";
 
 @ObjectType()
 class EmailTemplate extends EmailTemplateDoc {
@@ -80,6 +81,7 @@ class UpsertEmailTemplateRequest extends EmailTemplateDoc {
   @Field(() => String, { nullable: true })
   secondaryCta: string;
 }
+
 @ArgsType()
 class SendRequest {
   @Field(() => String)
@@ -129,14 +131,20 @@ export class EmailTemplateResolver {
       reqHeaders,
     }: IContext
   ): Promise<string> {
-    if (!userId) {
+    let found: ApiTokensDoc | null;
+    if (userId) {
+      found = await apiTokens.findOne({ owner: userId });
+    } else {
       const token = String(reqHeaders.authorization).replace("Bearer ", "");
-      const found = await apiTokens.findOne({ carrierToken: token });
-      if (!found) {
-        throw new AuthenticationError("invalid carrier token");
-      }
+      found = await apiTokens.findOne({ carrierToken: token });
     }
-    await emailTemplateService.send(args);
+    if (!found) {
+      throw new AuthenticationError("invalid carrier token");
+    }
+    if (!found.sendgridApiKey) {
+      throw new ValidationError("please setup sendgrid api key first");
+    }
+    await emailTemplateService.send(args, found.sendgridApiKey);
     return "OK";
   }
 
