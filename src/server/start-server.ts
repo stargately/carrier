@@ -28,7 +28,10 @@ export async function startServer(): Promise<Server> {
   const server: MyServer = new Server((config as any) as Config) as MyServer;
   server.app.proxy = Boolean(config.get("server.proxy"));
   setGateways(server);
-  server.auth = new OnefxAuth(server.gateways.mongoose, authConfig);
+  server.auth = new OnefxAuth(server.gateways.mongoose, {
+    ...authConfig,
+    loginUrl: "/carrier/login",
+  });
   setMiddleware(server);
   setModel(server);
   setService(server);

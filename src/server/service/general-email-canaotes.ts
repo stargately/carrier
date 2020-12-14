@@ -29,7 +29,7 @@ export const getGeneralEmailCanaotes = (payload: Payload): string => `
 
     <mj-section padding-bottom="0px">
       <mj-column>
-        <mj-image src="https://daommo.com/favicon-32x32.png" alt="image description" align="left" width="50px" />
+        <mj-image src="https://dashboard.daommo.com/favicon-32x32.png" alt="logo" align="left" width="50px" />
         <mj-text>
           <h1>
             ${payload.subject}

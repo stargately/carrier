@@ -38,7 +38,7 @@
     <mj-section padding-bottom="0px">
       <mj-column>
         <mj-image
-          src="https://daommo.com/favicon-32x32.png"
+          src="https://dashboard.daommo.com/favicon-32x32.png"
           alt="image description"
           align="left"
           width="50px"
