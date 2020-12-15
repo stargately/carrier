@@ -7,7 +7,10 @@ import notification from "antd/lib/notification";
 import { useUpsertEmailTemplate } from "@/shared/template-manager/hooks/use-upsert-email-template";
 // eslint-disable-next-line camelcase
 import { EmailTemplates_emailTemplates } from "@/shared/template-manager/data/__generated__/EmailTemplates";
-import { renderHtml } from "@/shared/template-manager/data/queries";
+import {
+  emailTemplates,
+  renderHtml,
+} from "@/shared/template-manager/data/queries";
 import { exampleDataPayload } from "@/shared/template-manager/email-preview";
 
 const layout = {
@@ -16,10 +19,16 @@ const layout = {
 };
 
 // eslint-disable-next-line camelcase
-type Props = { template?: EmailTemplates_emailTemplates };
+type Props = {
+  template?: EmailTemplates_emailTemplates;
+  setTemplateId?: (id: string) => void;
+};
 
 // eslint-disable-next-line camelcase
-export const EmailTemplateFormController: React.FC<Props> = ({ template }) => {
+export const EmailTemplateFormController: React.FC<Props> = ({
+  setTemplateId,
+  template,
+}) => {
   const { upsertEmailTemplate } = useUpsertEmailTemplate();
   const [form] = Form.useForm();
 
@@ -35,10 +44,16 @@ export const EmailTemplateFormController: React.FC<Props> = ({ template }) => {
             templateId: variables.id,
           },
         },
+        {
+          query: emailTemplates,
+        },
       ],
     });
     notification.success({ message: "updated!" });
     form.setFieldsValue(resp?.data?.upsertEmailTemplate || template);
+    if (setTemplateId) {
+      setTemplateId(variables.id);
+    }
   };
   useEffect(() => {
     form.setFieldsValue(template);
@@ -48,7 +63,7 @@ export const EmailTemplateFormController: React.FC<Props> = ({ template }) => {
     <Form {...layout} onFinish={onFinish} form={form}>
       <h2>{template ? "Update " : "Create "}Email Template</h2>
       <Form.Item name="id" label="id" rules={[{ required: true }]}>
-        <Input disabled={Boolean(template)} />
+        <Input disabled={Boolean(template?.id)} />
       </Form.Item>
       <Form.Item
         name="description"

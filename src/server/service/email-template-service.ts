@@ -23,7 +23,7 @@ export function formatString(
 export function wrapMjmlLines(hydrated = ""): string {
   const wrapLine = (line: string): string =>
     `
-    <mj-section padding-bottom="0px">
+    <mj-section padding="0px">
       <mj-column>
         <mj-text>
           <p>
