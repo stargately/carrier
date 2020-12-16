@@ -9,8 +9,10 @@ import { useUpsertEmailTemplate } from "@/shared/template-manager/hooks/use-upse
 import { EmailTemplates_emailTemplates } from "@/shared/template-manager/data/__generated__/EmailTemplates";
 import {
   emailTemplates,
+  exampleDataPayload,
   renderHtml,
 } from "@/shared/template-manager/data/queries";
+import { getOperationName } from "@apollo/client/utilities";
 
 const layout = {
   labelCol: { span: 4 },
@@ -36,15 +38,12 @@ export const EmailTemplateFormController: React.FC<Props> = ({
     const resp = await upsertEmailTemplate({
       variables,
       refetchQueries: [
-        {
-          query: renderHtml,
-          variables: {
-            templateId: variables.id,
-          },
-        },
-        {
-          query: emailTemplates,
-        },
+        // @ts-ignore
+        getOperationName(exampleDataPayload),
+        // @ts-ignore
+        getOperationName(renderHtml),
+        // @ts-ignore
+        getOperationName(emailTemplates),
       ],
     });
     notification.success({ message: "updated!" });
