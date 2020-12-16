@@ -97,6 +97,30 @@ class SendRequest {
   payload: Record<string, unknown>;
 }
 
+@ArgsType()
+class RenderRequest {
+  @Field(() => String)
+  templateId: string;
+
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  payload: Record<string, unknown>;
+}
+
+@ArgsType()
+class ExampleDataPayloadRequest {
+  @Field(() => ID)
+  templateId: string;
+}
+
+@ArgsType()
+class UpdateExampleDataPayloadRequest {
+  @Field(() => ID)
+  templateId: string;
+
+  @Field(() => GraphQLJSONObject)
+  exampleDataPayload: Record<string, unknown>;
+}
+
 @Resolver()
 export class EmailTemplateResolver {
   @Authorized()
@@ -151,9 +175,30 @@ export class EmailTemplateResolver {
   @Authorized()
   @Query(() => String)
   async renderHtml(
-    @Args() args: SendRequest,
+    @Args() args: RenderRequest,
     @Ctx() { service: { emailTemplateService } }: IContext
   ): Promise<string> {
     return emailTemplateService.renderHtml(args);
+  }
+
+  @Authorized()
+  @Query(() => GraphQLJSONObject, { nullable: true })
+  async exampleDataPayload(
+    @Args() args: ExampleDataPayloadRequest,
+    @Ctx() { service: { emailTemplateService } }: IContext
+  ): Promise<Record<string, unknown> | undefined> {
+    return emailTemplateService.getExampleDataPayload(args.templateId);
+  }
+
+  @Authorized()
+  @Mutation(() => GraphQLJSONObject, { nullable: true })
+  async updateExampleDataPayload(
+    @Args() args: UpdateExampleDataPayloadRequest,
+    @Ctx() { service: { emailTemplateService } }: IContext
+  ): Promise<Record<string, unknown> | undefined> {
+    return emailTemplateService.updateExampleDataPayload(
+      args.templateId,
+      args.exampleDataPayload
+    );
   }
 }

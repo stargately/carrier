@@ -28,3 +28,15 @@ export const upsertEmailTemplate = gql`
     }
   }
 `;
+
+export const updateExampleDataPayload = gql`
+  mutation UpdateExampleDataPayload(
+    $templateId: ID!
+    $exampleDataPayload: JSONObject!
+  ) {
+    updateExampleDataPayload(
+      templateId: $templateId
+      exampleDataPayload: $exampleDataPayload
+    )
+  }
+`;

@@ -11,15 +11,14 @@ import {
   emailTemplates,
   renderHtml,
 } from "@/shared/template-manager/data/queries";
-import { exampleDataPayload } from "@/shared/template-manager/email-preview";
 
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 20 },
 };
 
-// eslint-disable-next-line camelcase
 type Props = {
+  // eslint-disable-next-line camelcase
   template?: EmailTemplates_emailTemplates;
   setTemplateId?: (id: string) => void;
 };
@@ -40,7 +39,6 @@ export const EmailTemplateFormController: React.FC<Props> = ({
         {
           query: renderHtml,
           variables: {
-            ...exampleDataPayload,
             templateId: variables.id,
           },
         },

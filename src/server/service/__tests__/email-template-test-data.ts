@@ -26,7 +26,7 @@ We look forward to speaking with you soon!
 `;
 
 export const testBlockMjml = `
-    <mj-section padding-bottom="0px">
+    <mj-section padding="0px">
       <mj-column>
         <mj-text>
           <p>
@@ -38,7 +38,7 @@ export const testBlockMjml = `
 
 
 
-    <mj-section padding-bottom="0px">
+    <mj-section padding="0px">
       <mj-column>
         <mj-text>
           <p>
@@ -50,7 +50,7 @@ export const testBlockMjml = `
 
 
 
-    <mj-section padding-bottom="0px">
+    <mj-section padding="0px">
       <mj-column>
         <mj-text>
           <p>
@@ -62,7 +62,7 @@ export const testBlockMjml = `
 
 
 
-    <mj-section padding-bottom="0px">
+    <mj-section padding="0px">
       <mj-column>
         <mj-text>
           <p>

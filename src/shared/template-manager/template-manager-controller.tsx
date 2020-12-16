@@ -5,10 +5,10 @@ import Col from "antd/lib/grid/col";
 import Button from "antd/lib/button";
 import Select from "antd/lib/select";
 import Card from "antd/lib/card";
+import { useHistory, useLocation } from "react-router";
 import { EmailTemplateFormController } from "./email-template-form-controller";
 import { CommonMargin } from "../common/common-margin";
 import { EmailPreview } from "./email-preview";
-import { useHistory, useLocation } from "react-router";
 
 const newTemplate = {
   id: "",
@@ -91,13 +91,13 @@ export const TemplateManagerController: React.FC = () => {
             </Card>
           </Col>
           <Col span={12}>
-            <Card>
-              {id === IS_NEW_ID ? (
-                <div>Submit to view</div>
-              ) : (
-                <EmailPreview templateId={curId} />
-              )}
-            </Card>
+            {id === IS_NEW_ID ? (
+              <Card>
+                <h2>Submit to preview</h2>
+              </Card>
+            ) : (
+              <EmailPreview templateId={curId} />
+            )}
           </Col>
         </Row>
       )}

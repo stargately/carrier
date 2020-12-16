@@ -110,6 +110,8 @@ type SendArgs = {
   payload: Record<string, unknown>;
 };
 
+type RenderArgs = Pick<SendArgs, "templateId" | "payload">;
+
 export class EmailTemplateService {
   deps: Deps;
 
@@ -134,7 +136,7 @@ export class EmailTemplateService {
     });
   }
 
-  async renderHtml(args: SendArgs): Promise<string> {
+  async renderHtml(args: RenderArgs): Promise<string> {
     const template = await this.deps.model.emailTemplate.findOne({
       id: args.templateId,
     });
@@ -142,5 +144,23 @@ export class EmailTemplateService {
       throw new ValidationError("invalid templateId");
     }
     return mjml2html(buildMjml(template, args.payload as DataPayload)).html;
+  }
+
+  async getExampleDataPayload(
+    id: string
+  ): Promise<Record<string, unknown> | undefined> {
+    const res = await this.deps.model.emailTemplate.findOne({ id });
+    return res?.exampleDataPayload;
+  }
+
+  async updateExampleDataPayload(
+    templateId: string,
+    exampleDataPayload: Record<string, unknown>
+  ): Promise<Record<string, unknown> | undefined> {
+    const resp = await this.deps.model.emailTemplate.findOneAndUpdate(
+      { id: templateId },
+      { exampleDataPayload }
+    );
+    return resp?.exampleDataPayload;
   }
 }

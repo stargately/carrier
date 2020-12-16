@@ -18,17 +18,13 @@ export const emailTemplates = gql`
 `;
 
 export const renderHtml = gql`
-  query RenderHtml(
-    $templateId: String!
-    $email: String!
-    $idempotencyKey: String!
-    $payload: JSONObject
-  ) {
-    renderHtml(
-      templateId: $templateId
-      email: $email
-      idempotencyKey: $idempotencyKey
-      payload: $payload
-    )
+  query RenderHtml($templateId: String!, $payload: JSONObject) {
+    renderHtml(templateId: $templateId, payload: $payload)
+  }
+`;
+
+export const exampleDataPayload = gql`
+  query ExampleDataPayload($templateId: ID!) {
+    exampleDataPayload(templateId: $templateId)
   }
 `;
