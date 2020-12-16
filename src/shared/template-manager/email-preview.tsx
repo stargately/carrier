@@ -54,7 +54,7 @@ export const EmailPreview: React.FC<Props> = ({ templateId }) => {
             <Form.Item
               label="JSON Payload"
               name="exampleDataPayload"
-              initialValue={JSON.stringify(exampleDataPayload, null, 2)}
+              initialValue={JSON.stringify(exampleDataPayload || {}, null, 2)}
             >
               <TextArea
                 style={{ fontFamily: "monospace, monospace" }}
