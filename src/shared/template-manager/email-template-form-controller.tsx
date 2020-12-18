@@ -69,7 +69,11 @@ export const EmailTemplateFormController: React.FC<Props> = ({
       >
         <Input />
       </Form.Item>
-      <Form.Item name="fromEmail" label="fromEmail">
+      <Form.Item
+        name="fromEmail"
+        label="fromEmail"
+        rules={[{ required: true }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item name="replyToEmail" label="replyToEmail">
