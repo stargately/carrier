@@ -38,7 +38,7 @@
     <mj-section padding="0px">
       <mj-column>
         <mj-image
-          src="https://dashboard.daommo.com/logo-text.svg"
+          src="https://dashboard.daommo.com/logo-text.png"
           alt="logo"
           align="left"
           width="128px"
