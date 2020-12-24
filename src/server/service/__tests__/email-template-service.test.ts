@@ -2,7 +2,6 @@ import test from "ava";
 import fs from "fs";
 import {
   buildMjml,
-  formatString,
   parseCta,
   wrapMjmlLines,
 } from "@/server/service/email-template-service";
@@ -13,6 +12,7 @@ import {
   testHydrated,
 } from "@/server/service/__tests__/email-template-test-data";
 import mjml2html from "mjml";
+import { formatString } from "@/shared/common/format-string";
 
 test("lines to wrapped html", async (t) => {
   const hydrated = formatString(testBlock, testDataPayload);

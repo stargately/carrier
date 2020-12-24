@@ -37,7 +37,9 @@ export const ApiTokensController = () => {
       <Form.Item
         label="sendgridApiKey"
         name="sendgridApiKey"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        rules={[
+          { required: true, message: "Please input your sendgrid API key!" },
+        ]}
       >
         <Input />
       </Form.Item>

@@ -3,22 +3,7 @@ import { EmailTemplateModel } from "@/model/email-template-model";
 import { ValidationError } from "apollo-server-koa";
 import sgMail from "@sendgrid/mail";
 import mjml2html from "mjml";
-
-export function formatString(
-  str?: string,
-  data?: Record<string, string | undefined>
-): string {
-  if (!str || !data) {
-    return str || "";
-  }
-
-  let processed = str;
-  Object.keys(data).forEach((key) => {
-    processed = processed.replace(`\${${key}}`, data[key] || "");
-  });
-
-  return processed || "";
-}
+import { formatString } from "@/shared/common/format-string";
 
 export function wrapMjmlLines(hydrated = ""): string {
   const wrapLine = (line: string): string =>
@@ -47,17 +32,33 @@ export function parseCta(
   };
 }
 
-export function mjmlCta(cta: {
+type Cta = {
   content: string | null;
   href: string | null;
-}): string {
+};
+
+export function mjmlCta(mainCta: Cta, secondaryCta: Cta): string {
+  if (!mainCta.content) {
+    return "";
+  }
   return `
     <mj-section>
-      <mj-column width="100%">
-        <mj-button align="left" href="${cta.href}">
-          ${cta.content}
-        </mj-button>
-      </mj-column>
+      <mj-group>
+        <mj-column>
+          <mj-button align="left" href="${mainCta.href}">
+            ${mainCta.content}
+          </mj-button>
+        </mj-column>
+
+        ${
+          (secondaryCta.content &&
+            `<mj-column><mj-button href="${secondaryCta.href}" background-color="white" color="black" border="solid 1px">
+         ${secondaryCta.content}
+        </mj-button></mj-column>`) ||
+          ""
+        }
+
+      </mj-group>
     </mj-section>`;
 }
 
@@ -84,13 +85,17 @@ export function buildMjml(
   const hydratedPayload = {
     subject: formatString(template.subject, dataPayload),
     mainContent: wrapMjmlLines(formatString(template.mainContent, dataPayload)),
-    mainCta: mjmlCta(parseCta(formatString(template.mainCta, dataPayload))),
+    cta: mjmlCta(
+      parseCta(formatString(template.mainCta, dataPayload)),
+      parseCta(formatString(template.secondaryCta, dataPayload))
+    ),
     secondaryContent: wrapMjmlLines(
       formatString(template.secondaryContent, dataPayload)
     ),
-    secondaryCta: formatString(template.secondaryCta, dataPayload),
   };
-  return getGeneralEmailCanaotes(hydratedPayload);
+  return getGeneralEmailCanaotes(hydratedPayload, {
+    _logo: "https://dashboard.daommo.com/logo-text.png",
+  });
 }
 
 type Deps = {

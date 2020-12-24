@@ -126,20 +126,20 @@ export class EmailTemplateResolver {
   @Authorized()
   @Query(() => [EmailTemplate])
   async emailTemplates(
-    @Ctx() { model: { emailTemplate } }: IContext
+    @Ctx() { model: { emailTemplate }, userId }: IContext
   ): Promise<Array<EmailTemplate>> {
-    return emailTemplate.find({});
+    return emailTemplate.find({ owner: userId });
   }
 
   @Authorized()
   @Mutation(() => EmailTemplate, { nullable: true })
   async upsertEmailTemplate(
     @Args() args: UpsertEmailTemplateRequest,
-    @Ctx() { model: { emailTemplate } }: IContext
+    @Ctx() { model: { emailTemplate }, userId }: IContext
   ): Promise<EmailTemplate | null> {
     return emailTemplate.findOneAndUpdate(
       { id: args.id },
-      { ...args },
+      { ...args, owner: userId },
       { upsert: true }
     );
   }

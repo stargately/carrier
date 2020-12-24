@@ -21,6 +21,9 @@ class ApiTokens {
 
   @Field(() => String, { nullable: true })
   carrierToken?: string;
+
+  @Field(() => String, { nullable: true })
+  logoUrl?: string;
 }
 
 @ArgsType()

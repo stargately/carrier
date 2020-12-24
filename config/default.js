@@ -1,3 +1,5 @@
+const { getEnvVar } = require("onefx/lib/env-var");
+
 const { config } = require("dotenv");
 config();
 
@@ -23,6 +25,12 @@ module.exports = {
       [`${routePrefix}/api/`]: true,
     },
   },
+  service: {
+    azureSas: {
+      account: "beancountstore",
+      accountKey: getEnvVar("AZURE_BLOB_ACCOUNT_KEY", ""),
+    },
+  },
   gateways: {
     logger: {
       enabled: true,
@@ -44,6 +52,7 @@ module.exports = {
       "self",
       "https://www.google-analytics.com/",
       "https://carrier.onrender.com/carrier/api-gateway/",
+      "https://beancountstore.blob.core.windows.net/",
     ],
     "child-src": ["self"],
     "font-src": ["self", "data:", "https://fonts.gstatic.com/"],

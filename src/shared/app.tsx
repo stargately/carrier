@@ -10,6 +10,7 @@ import { fonts } from "@/shared/common/styles/style-font";
 import { TopBar } from "@/shared/common/top-bar";
 import { Home } from "@/shared/home/home";
 import { ManagerTabs } from "@/shared/template-manager/manager-tabs";
+import { Avatar } from "@/shared/common/upload";
 
 const initGoogleAnalytics = require("./common/google-analytics");
 
@@ -33,6 +34,9 @@ export function App(props: Props): JSX.Element {
             </Route>
             <Route exact path="/templates*">
               <ManagerTabs />
+            </Route>
+            <Route exact path="/avatar">
+              <Avatar />
             </Route>
             <Route path="*">
               <NotFound />

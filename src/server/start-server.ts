@@ -16,6 +16,12 @@ export type MyServer = Server & {
         uri: string;
       };
     };
+    service: {
+      azureSas: {
+        account: string;
+        accountKey: string;
+      };
+    };
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvers: any;

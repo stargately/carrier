@@ -1,15 +1,29 @@
+import { formatString } from "@/shared/common/format-string";
+
 type Payload = {
   subject: string;
   mainContent: string;
-  mainCta: string;
+  cta: string;
   secondaryContent: string;
-  secondaryCta: string;
 };
 
-export const getGeneralEmailCanaotes = (payload: Payload): string => `
+type MetaPayload = {
+  _logo: string;
+};
+
+export const getGeneralEmailCanaotes = (
+  payload: Payload,
+  metaPayload: MetaPayload
+): string => {
+  const allPayload = {
+    ...payload,
+    ...metaPayload,
+  };
+  return formatString(
+    `
 <mjml lang="en">
   <mj-head>
-    <mj-title>${payload.subject}</mj-title>
+    <mj-title>\${subject}</mj-title>
     <mj-attributes>
       <mj-button border-radius="4px" text-transform="capitalize" font-weight="bold" font-size="14px" line-height="16.41px" background-color="#33A68F" color="#ffffff"></mj-button>
       <mj-all font-size="14px" line-height="16.41px" font-family="Roboto, Helvetica, Arial, sans-serif"></mj-all>
@@ -29,15 +43,18 @@ export const getGeneralEmailCanaotes = (payload: Payload): string => `
 
     <mj-section padding="0px">
       <mj-column>
-        <mj-image src="https://dashboard.daommo.com/logo-text.png" alt="logo" align="left" width="128px" style="color: #34699A;" />
+        <mj-image src="\${_logo}" alt="logo" align="left" width="128px" />
       </mj-column>
     </mj-section>
 
-    ${payload.mainContent}
+    \${mainContent}
 
-    ${payload.mainCta}
+    \${cta}
 
-    ${payload.secondaryContent}
+    \${secondaryContent}
   </mj-body>
 </mjml>
-`;
+`,
+    allPayload
+  );
+};

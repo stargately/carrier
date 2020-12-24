@@ -6,6 +6,7 @@ export const apiTokens = gql`
       _id
       sendgridApiKey
       carrierToken
+      logoUrl
     }
   }
 `;

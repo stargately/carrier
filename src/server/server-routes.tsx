@@ -18,25 +18,13 @@ export function setServerRoutes(server: MyServer): void {
 
   server.get(
     "SPA",
-    "/templates",
-    server.auth.authRequired,
-    async (ctx: Context) => {
-      ctx.setState("base.nonce", ctx.state.nonce);
-      ctx.body = await apolloSSR(ctx, {
-        VDom: <AppContainer />,
-        reducer: noopReducer,
-        clientScript: "/main.js",
-      });
-    }
-  );
-
-  server.get(
-    "SPA",
     new RegExp(
       `^(?!\\/?${server.config.server.routePrefix}/api-gateway\\/).+$`
     ),
+    server.auth.authRequired,
     async (ctx: Context) => {
       ctx.setState("base.nonce", ctx.state.nonce);
+      ctx.setState("base.authToken", server.auth.tokenFromCtx(ctx));
 
       ctx.body = await apolloSSR(ctx, {
         VDom: <AppContainer />,
