@@ -11,15 +11,6 @@
         background-color="#33A68F"
         color="#ffffff"
       ></mj-button>
-      <mj-button2
-        border-radius="4px"
-        text-transform="capitalize"
-        font-weight="bold"
-        font-size="14px"
-        line-height="16.41px"
-        background-color="#33A68F"
-        color="#ffffff"
-      ></mj-button2>
       <mj-all
         font-size="14px"
         line-height="16.41px"
@@ -51,7 +42,6 @@
           alt="logo"
           align="left"
           width="128px"
-          style="color: #34699a"
         />
       </mj-column>
     </mj-section>

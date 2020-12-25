@@ -27,7 +27,7 @@ export class AzureSasService {
   }
 
   // https://docs.microsoft.com/en-us/rest/api/storageservices/service-sas-examples
-  getUrl(container: string, filename: string): string {
+  getRwcUrl(container: string, filename: string): string {
     const tmr = new Date();
     tmr.setDate(tmr.getDate() + 1);
 
@@ -35,7 +35,25 @@ export class AzureSasService {
       {
         expiresOn: tmr,
         permissions: BlobSASPermissions.parse("rwc"),
-        containerName: "receipts",
+        containerName: container,
+        startsOn: new Date(),
+      },
+      this.sharedKeyCredential
+    );
+    return `https://${
+      this.account
+    }.blob.core.windows.net/${container}/${filename}?${sas.toString()}`;
+  }
+
+  getLongTermReadUrl(container: string, filename: string): string {
+    const tmr = new Date();
+    tmr.setDate(tmr.getDate() + 2555);
+
+    const sas = generateBlobSASQueryParameters(
+      {
+        expiresOn: tmr,
+        permissions: BlobSASPermissions.parse("r"),
+        containerName: container,
         startsOn: new Date(),
       },
       this.sharedKeyCredential

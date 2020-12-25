@@ -2,7 +2,9 @@ import Upload, { UploadChangeParam } from "antd/lib/upload";
 import message from "antd/lib/message";
 import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { RcCustomRequestOptions } from "antd/lib/upload/interface";
+import { axiosInstance } from "@/shared/onefx-auth-provider/email-password-identity-provider/view/axios-instance";
 
 function getBase64(img: Blob | File, callback: (result: string) => void) {
   const reader = new FileReader();
@@ -22,9 +24,35 @@ function beforeUpload(file: File) {
   return isJpgOrPng && isLt2M;
 }
 
-export const Avatar: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | ArrayBuffer | null>("");
+const prefix = "data:image/png;base64,";
+
+type Props = {
+  initialImageUrl: string;
+};
+
+export const Avatar: React.FC<Props> = ({ initialImageUrl }) => {
+  const [loading, setLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState<string>(initialImageUrl);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!imageUrl || imageUrl.startsWith(prefix)) {
+          setLoading(false);
+          return;
+        }
+        setLoading(true);
+        const resp = await axiosInstance.get(imageUrl, {
+          responseType: "arraybuffer",
+        });
+        const imageBase64 = Buffer.from(resp.data, "binary").toString("base64");
+        setImageUrl(`${prefix}${imageBase64}`);
+      } catch (_) {
+        setImageUrl("");
+      }
+      setLoading(false);
+    })();
+  });
 
   const handleChange = (info: UploadChangeParam) => {
     if (info.file.status === "uploading") {
@@ -40,27 +68,53 @@ export const Avatar: React.FC = () => {
     }
   };
 
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  let innerTile: React.ReactNode;
+  console.log({
+    loading,
+    imageUrl,
+  });
+  if (loading) {
+    innerTile = (
+      <div>
+        <LoadingOutlined />
+        <div style={{ marginTop: 8 }}>Loading</div>
+      </div>
+    );
+  } else if (!imageUrl) {
+    innerTile = (
+      <div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
+  } else {
+    innerTile = (
+      <img src={String(imageUrl)} alt="avatar" style={{ width: "100%" }} />
+    );
+  }
+
   return (
     <Upload
       name="avatar"
       listType="picture-card"
       className="avatar-uploader"
       showUploadList={false}
-      action="https://beancountstore.blob.core.windows.net/beancountstore/test?sv=2020-02-10&st=2020-12-22T09%3A00%3A14Z&se=2020-12-23T09%3A00%3A14Z&sr=c&sp=rcw&sig=gbVBCe1byXFrkyIFJFfBOFYxXU4Umggxr9%2Bfai%2BPOzc%3D"
       beforeUpload={beforeUpload}
+      customRequest={async (options: RcCustomRequestOptions) => {
+        setLoading(true);
+        await axiosInstance.put(initialImageUrl, options.file, {
+          headers: {
+            "x-ms-blob-type": "BlockBlob",
+            "Content-Type": options.file.type,
+          },
+        });
+        options.onSuccess({}, options.file);
+        setLoading(false);
+      }}
+      method="PUT"
       onChange={handleChange}
     >
-      {imageUrl ? (
-        <img src={String(imageUrl)} alt="avatar" style={{ width: "100%" }} />
-      ) : (
-        uploadButton
-      )}
+      {innerTile}
     </Upload>
   );
 };
