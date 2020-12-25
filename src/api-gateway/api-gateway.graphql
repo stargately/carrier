@@ -10,6 +10,10 @@ type ApiTokens {
   logoUrl: String
 }
 
+type EmailMetaTemplate {
+  logoUrl: String!
+}
+
 type EmailTemplate {
   id: ID!
   description: String!
@@ -61,6 +65,7 @@ type Query {
   renderHtml(templateId: String!, payload: JSONObject): String!
   exampleDataPayload(templateId: ID!): JSONObject
   apiTokens: ApiTokens!
+  emailMetaTemplates(userId: ID!): EmailMetaTemplate!
 
   # is the server healthy?
   health: String!

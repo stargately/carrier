@@ -7,7 +7,7 @@ type Payload = {
   secondaryContent: string;
 };
 
-type MetaPayload = {
+export type MetaPayload = {
   _logo: string;
 };
 

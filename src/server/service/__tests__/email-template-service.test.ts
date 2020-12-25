@@ -39,7 +39,9 @@ test("build template", async (t) => {
     secondaryCta: "",
   };
 
-  const mjml = buildMjml(template, dataPayload);
+  const mjml = buildMjml(template, dataPayload, {
+    _logo: "https://dashboard.daommo.com/logo-text.png",
+  });
 
   fs.writeFileSync(`${__dirname}/output-template.mjml`, mjml);
   t.truthy(mjml);

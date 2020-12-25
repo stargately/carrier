@@ -24,6 +24,7 @@ export function setServerRoutes(server: MyServer): void {
     server.auth.authRequired,
     async (ctx: Context) => {
       ctx.setState("base.nonce", ctx.state.nonce);
+      ctx.setState("base.userId", ctx.state.userId);
       ctx.setState("base.authToken", server.auth.tokenFromCtx(ctx));
 
       ctx.body = await apolloSSR(ctx, {

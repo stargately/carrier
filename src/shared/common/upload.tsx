@@ -28,21 +28,22 @@ const prefix = "data:image/png;base64,";
 
 type Props = {
   initialImageUrl: string;
+  isLoading: boolean;
 };
 
-export const Avatar: React.FC<Props> = ({ initialImageUrl }) => {
-  const [loading, setLoading] = useState(true);
+export const Avatar: React.FC<Props> = ({ initialImageUrl, isLoading }) => {
+  const [loading, setLoading] = useState(isLoading);
   const [imageUrl, setImageUrl] = useState<string>(initialImageUrl);
 
   useEffect(() => {
     (async () => {
       try {
-        if (!imageUrl || imageUrl.startsWith(prefix)) {
+        if (!initialImageUrl) {
           setLoading(false);
           return;
         }
         setLoading(true);
-        const resp = await axiosInstance.get(imageUrl, {
+        const resp = await axiosInstance.get(initialImageUrl, {
           responseType: "arraybuffer",
         });
         const imageBase64 = Buffer.from(resp.data, "binary").toString("base64");
@@ -52,7 +53,7 @@ export const Avatar: React.FC<Props> = ({ initialImageUrl }) => {
       }
       setLoading(false);
     })();
-  });
+  }, [initialImageUrl]);
 
   const handleChange = (info: UploadChangeParam) => {
     if (info.file.status === "uploading") {
@@ -69,10 +70,6 @@ export const Avatar: React.FC<Props> = ({ initialImageUrl }) => {
   };
 
   let innerTile: React.ReactNode;
-  console.log({
-    loading,
-    imageUrl,
-  });
   if (loading) {
     innerTile = (
       <div>

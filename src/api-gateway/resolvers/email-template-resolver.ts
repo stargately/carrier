@@ -168,7 +168,7 @@ export class EmailTemplateResolver {
     if (!found.sendgridApiKey) {
       throw new ValidationError("please setup sendgrid api key first");
     }
-    await emailTemplateService.send(args, found.sendgridApiKey);
+    await emailTemplateService.send(args, found.sendgridApiKey, userId);
     return "OK";
   }
 
@@ -176,9 +176,9 @@ export class EmailTemplateResolver {
   @Query(() => String)
   async renderHtml(
     @Args() args: RenderRequest,
-    @Ctx() { service: { emailTemplateService } }: IContext
+    @Ctx() { service: { emailTemplateService }, userId }: IContext
   ): Promise<string> {
-    return emailTemplateService.renderHtml(args);
+    return emailTemplateService.renderHtml(args, userId);
   }
 
   @Authorized()

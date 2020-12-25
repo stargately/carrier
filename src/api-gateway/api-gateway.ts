@@ -10,6 +10,7 @@ import { EmailTemplateResolver } from "@/api-gateway/resolvers/email-template-re
 import { Service } from "@/server/service/service";
 import { customAuthChecker } from "@/api-gateway/auth-checker";
 import { ApiTokensResolver } from "@/shared/api-tokens/api-tokens-resolver";
+import { EmailMetaTemplateResolver } from "@/api-gateway/resolvers/email-meta-template-resolver";
 import { MetaResolver } from "./resolvers/meta-resolver";
 
 export interface IContext {
@@ -24,7 +25,12 @@ export interface IContext {
 }
 
 export async function setApiGateway(server: MyServer): Promise<void> {
-  const resolvers = [MetaResolver, EmailTemplateResolver, ApiTokensResolver];
+  const resolvers = [
+    MetaResolver,
+    EmailTemplateResolver,
+    ApiTokensResolver,
+    EmailMetaTemplateResolver,
+  ];
   server.resolvers = resolvers;
 
   const sdlPath = path.resolve(__dirname, "api-gateway.graphql");

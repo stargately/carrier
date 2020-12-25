@@ -5,6 +5,7 @@ import { TemplateManagerController } from "@/shared/template-manager/template-ma
 import { ContentPadding } from "@/shared/common/styles/style-padding";
 import { CommonMargin } from "@/shared/common/common-margin";
 import { ApiTokensController } from "../api-tokens/view/api-tokens-controller";
+import { LogoController } from "./logo-controller";
 
 const { TabPane } = Tabs;
 
@@ -25,6 +26,7 @@ export const ManagerTabs: React.FC = () => {
         <TabPane tab="Settings & API Tokens" key="settings">
           <CommonMargin />
           <ApiTokensController />
+          <LogoController />
         </TabPane>
       </Tabs>
     </ContentPadding>

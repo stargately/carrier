@@ -28,3 +28,11 @@ export const exampleDataPayload = gql`
     exampleDataPayload(templateId: $templateId)
   }
 `;
+
+export const emailMetaTemplates = gql`
+  query EmailMetaTemplates($userId: ID!) {
+    emailMetaTemplates(userId: $userId) {
+      logoUrl
+    }
+  }
+`;

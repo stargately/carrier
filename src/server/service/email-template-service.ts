@@ -1,9 +1,13 @@
-import { getGeneralEmailCanaotes } from "@/server/service/general-email-canaotes";
+import {
+  getGeneralEmailCanaotes,
+  MetaPayload,
+} from "@/server/service/general-email-canaotes";
 import { EmailTemplateModel } from "@/model/email-template-model";
 import { ValidationError } from "apollo-server-koa";
 import sgMail from "@sendgrid/mail";
 import mjml2html from "mjml";
 import { formatString } from "@/shared/common/format-string";
+import { AzureSasService } from "@/server/service/azure-sas";
 
 export function wrapMjmlLines(hydrated = ""): string {
   const wrapLine = (line: string): string =>
@@ -80,7 +84,8 @@ type DataPayload = {
 
 export function buildMjml(
   template: EmailTemplate,
-  dataPayload: DataPayload
+  dataPayload: DataPayload,
+  metaPayload: MetaPayload
 ): string {
   const hydratedPayload = {
     subject: formatString(template.subject, dataPayload),
@@ -93,9 +98,7 @@ export function buildMjml(
       formatString(template.secondaryContent, dataPayload)
     ),
   };
-  return getGeneralEmailCanaotes(hydratedPayload, {
-    _logo: "https://dashboard.daommo.com/logo-text.png",
-  });
+  return getGeneralEmailCanaotes(hydratedPayload, metaPayload);
 }
 
 type Deps = {
@@ -103,6 +106,7 @@ type Deps = {
   gateways: {
     sgMail: typeof sgMail;
   };
+  service: { azureSas: AzureSasService };
 };
 
 type SendArgs = {
@@ -124,7 +128,7 @@ export class EmailTemplateService {
     this.deps = deps;
   }
 
-  async send(args: SendArgs, sgApiKey: string): Promise<void> {
+  async send(args: SendArgs, sgApiKey: string, userId: string): Promise<void> {
     const template = await this.deps.model.emailTemplate.findOne({
       id: args.templateId,
     });
@@ -132,23 +136,31 @@ export class EmailTemplateService {
       throw new ValidationError("invalid templateId");
     }
     this.deps.gateways.sgMail.setApiKey(sgApiKey);
+    const meta = {
+      _logo: this.deps.service.azureSas.getRwcUrl("carrier", `${userId}/logo`),
+    };
     await this.deps.gateways.sgMail.send({
       to: args.email,
       from: { email: template.fromEmail },
       subject: template.subject,
-      html: mjml2html(buildMjml(template, args.payload as DataPayload)).html,
+      html: mjml2html(buildMjml(template, args.payload as DataPayload, meta))
+        .html,
       text: template.plainTextBody,
     });
   }
 
-  async renderHtml(args: RenderArgs): Promise<string> {
+  async renderHtml(args: RenderArgs, userId: string): Promise<string> {
     const template = await this.deps.model.emailTemplate.findOne({
       id: args.templateId,
     });
     if (!template) {
       throw new ValidationError("invalid templateId");
     }
-    return mjml2html(buildMjml(template, args.payload as DataPayload)).html;
+    const meta = {
+      _logo: this.deps.service.azureSas.getRwcUrl("carrier", `${userId}/logo`),
+    };
+    return mjml2html(buildMjml(template, args.payload as DataPayload, meta))
+      .html;
   }
 
   async getExampleDataPayload(
