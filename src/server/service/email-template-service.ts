@@ -137,7 +137,10 @@ export class EmailTemplateService {
     }
     this.deps.gateways.sgMail.setApiKey(sgApiKey);
     const meta = {
-      _logo: this.deps.service.azureSas.getRwcUrl("carrier", `${userId}/logo`),
+      _logo: this.deps.service.azureSas.getLongTermReadUrl(
+        "carrier",
+        `${userId}/logo`
+      ),
     };
     await this.deps.gateways.sgMail.send({
       to: args.email,
@@ -157,7 +160,10 @@ export class EmailTemplateService {
       throw new ValidationError("invalid templateId");
     }
     const meta = {
-      _logo: this.deps.service.azureSas.getRwcUrl("carrier", `${userId}/logo`),
+      _logo: this.deps.service.azureSas.getLongTermReadUrl(
+        "carrier",
+        `${userId}/logo`
+      ),
     };
     return mjml2html(buildMjml(template, args.payload as DataPayload, meta))
       .html;

@@ -168,7 +168,7 @@ export class EmailTemplateResolver {
     if (!found.sendgridApiKey) {
       throw new ValidationError("please setup sendgrid api key first");
     }
-    await emailTemplateService.send(args, found.sendgridApiKey, userId);
+    await emailTemplateService.send(args, found.sendgridApiKey, found.owner);
     return "OK";
   }
 
