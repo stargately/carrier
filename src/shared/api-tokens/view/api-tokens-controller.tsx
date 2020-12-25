@@ -41,7 +41,7 @@ export const ApiTokensController = () => {
           { required: true, message: "Please input your sendgrid API key!" },
         ]}
       >
-        <Input />
+        <Input.Password />
       </Form.Item>
 
       <Form.Item
@@ -49,7 +49,7 @@ export const ApiTokensController = () => {
         name="carrierToken"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input />
+        <Input.Password />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

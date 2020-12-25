@@ -50,9 +50,9 @@ auth/weak-password: Please use at least 8 characters as the password
 
 auth/wrong-password: Password is incorrect
 
-meta.description: Description
+meta.description: Email template service
 
-meta.title: Boilerplate
+meta.title: Stargately Carrier
 
 not_found.bar: Not Found
 

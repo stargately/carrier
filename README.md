@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/puncsky/carrier/tree/master.svg?style=svg)](https://circleci.com/gh/puncsky/carrier/tree/master)
 
+![](https://tp-misc.b-cdn.net/carrier-screenshot.png)
+
 - [Documentation](https://onefx.js.org/doc.html?utm_source=github-iotex-explorer)
 - [Contributing](https://onefx.js.org/contributing.html?utm_source=github-iotex-explorer)
 
@@ -41,7 +43,7 @@ To run your project in development mode, run:
 npm run watch
 ```
 
-The development site will be available at [http://localhost:5000](http://localhost:5000).
+The development site will be available at [http://localhost:4109](http://localhost:4109).
 
 #### Production Mode
 
@@ -58,4 +60,4 @@ NODE_ENV=production npm run start
 - `npm run ava ./path/to/test-file.js`: run a specific test file
 - `npm run build`: build source code from `src` to `dist`
 - `npm run lint`: run the linter
-- `npm run kill`: kill the node server occupying the port 5000.
+- `npm run kill`: kill the node server occupying the port 4109.
