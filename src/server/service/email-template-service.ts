@@ -131,6 +131,7 @@ export class EmailTemplateService {
   async send(args: SendArgs, sgApiKey: string, userId: string): Promise<void> {
     const template = await this.deps.model.emailTemplate.findOne({
       id: args.templateId,
+      owner: userId,
     });
     if (!template) {
       throw new ValidationError("invalid templateId");
