@@ -1,5 +1,6 @@
 import {
   getModelForClass,
+  index,
   modelOptions,
   prop,
   Ref,
@@ -9,8 +10,9 @@ import { UserModel, TUser as User } from "onefx-auth/lib/model/user-model";
 import { Schema } from "mongoose";
 
 @modelOptions({ options: { customName: "email_templates" } })
+@index({ id: 1, owner: 1 }, { unique: true })
 export class EmailTemplateDoc extends TimeStamps {
-  @prop({ unique: true })
+  @prop()
   id: string;
 
   @prop()

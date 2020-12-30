@@ -138,7 +138,7 @@ export class EmailTemplateResolver {
     @Ctx() { model: { emailTemplate }, userId }: IContext
   ): Promise<EmailTemplate | null> {
     return emailTemplate.findOneAndUpdate(
-      { id: args.id },
+      { id: args.id, owner: userId },
       { ...args, owner: userId },
       { upsert: true }
     );
