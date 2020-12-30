@@ -185,20 +185,21 @@ export class EmailTemplateResolver {
   @Query(() => GraphQLJSONObject, { nullable: true })
   async exampleDataPayload(
     @Args() args: ExampleDataPayloadRequest,
-    @Ctx() { service: { emailTemplateService } }: IContext
+    @Ctx() { service: { emailTemplateService }, userId }: IContext
   ): Promise<Record<string, unknown> | undefined> {
-    return emailTemplateService.getExampleDataPayload(args.templateId);
+    return emailTemplateService.getExampleDataPayload(args.templateId, userId);
   }
 
   @Authorized()
   @Mutation(() => GraphQLJSONObject, { nullable: true })
   async updateExampleDataPayload(
     @Args() args: UpdateExampleDataPayloadRequest,
-    @Ctx() { service: { emailTemplateService } }: IContext
+    @Ctx() { service: { emailTemplateService }, userId }: IContext
   ): Promise<Record<string, unknown> | undefined> {
     return emailTemplateService.updateExampleDataPayload(
       args.templateId,
-      args.exampleDataPayload
+      args.exampleDataPayload,
+      userId
     );
   }
 }

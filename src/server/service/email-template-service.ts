@@ -170,18 +170,23 @@ export class EmailTemplateService {
   }
 
   async getExampleDataPayload(
-    id: string
+    id: string,
+    userId: string
   ): Promise<Record<string, unknown> | undefined> {
-    const res = await this.deps.model.emailTemplate.findOne({ id });
+    const res = await this.deps.model.emailTemplate.findOne({
+      id,
+      owner: userId,
+    });
     return res?.exampleDataPayload;
   }
 
   async updateExampleDataPayload(
     templateId: string,
-    exampleDataPayload: Record<string, unknown>
+    exampleDataPayload: Record<string, unknown>,
+    userId: string
   ): Promise<Record<string, unknown> | undefined> {
     const resp = await this.deps.model.emailTemplate.findOneAndUpdate(
-      { id: templateId },
+      { id: templateId, owner: userId },
       { exampleDataPayload }
     );
     return resp?.exampleDataPayload;
