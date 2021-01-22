@@ -175,7 +175,7 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "config": "3.3.1",
     "dateformat": "3.0.3",
-    "dayjs": "1.8.35",
+    "dayjs": "1.10.4",
     "dotenv": "8.2.0",
     "eslint-plugin-react": "7.21.3",
     "form-serialize": "0.7.2",
