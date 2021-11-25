@@ -38,6 +38,18 @@ export const getGeneralEmailCanaotes = (
     <mj-style>
       a, span, td, th { -webkit-font-smoothing: antialiased !important; -moz-osx-font-smoothing: grayscale !important; }
     </mj-style>
+    <mj-style>
+      @media (min-width: 30em) and (orientation: landscape) {
+      .align-right {
+      text-align: -moz-right;
+      text-align: -webkit-right;
+      }
+      .align-left {
+      text-align: -moz-left;
+      text-align: -webkit-left;
+      }
+      }
+    </mj-style>
   </mj-head>
   <mj-body background-color="#ffffff">
 
