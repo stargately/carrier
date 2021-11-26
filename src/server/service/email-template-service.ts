@@ -28,7 +28,10 @@ export function wrapMjmlLines(hydrated = ""): string {
 
 export function parseCta(
   cta = ""
-): { content: string | null; href: string | null } {
+): {
+  content: string | null;
+  href: string | null;
+} {
   const match = new RegExp(/\[(.*)\]\((.*)\)/).exec(cta);
   return {
     content: match && match[1],
@@ -47,21 +50,20 @@ export function mjmlCta(mainCta: Cta, secondaryCta: Cta): string {
   }
   return `
     <mj-section>
-      <mj-group>
-        <mj-column>
-          <mj-button align="left" href="${mainCta.href}">
-            ${mainCta.content}
-          </mj-button>
-        </mj-column>
+    <mj-group>
+      <mj-column css-class="cta-column">
+        <mj-button align="left" href="${mainCta.href}" css-class="main-cta-btn">
+          ${mainCta.content}
+        </mj-button>
+      </mj-column>
 
-        ${
-          (secondaryCta.content &&
-            `<mj-column><mj-button href="${secondaryCta.href}" background-color="white" color="black" border="solid 1px">
-         ${secondaryCta.content}
-        </mj-button></mj-column>`) ||
-          ""
-        }
-
+      ${
+        (secondaryCta.content &&
+          `<mj-column css-class="cta-column"><mj-button align="left" href="${secondaryCta.href}" background-color="white" color="black" border="solid 1px" css-class="secondary-cta-btn">
+        ${secondaryCta.content}
+      </mj-button></mj-column>`) ||
+        ""
+      }
       </mj-group>
     </mj-section>`;
 }
