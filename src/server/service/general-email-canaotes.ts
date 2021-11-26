@@ -39,15 +39,14 @@ export const getGeneralEmailCanaotes = (
       a, span, td, th { -webkit-font-smoothing: antialiased !important; -moz-osx-font-smoothing: grayscale !important; }
     </mj-style>
     <mj-style>
-      @media (min-width: 30em) and (orientation: landscape) {
-      .align-right {
-      text-align: -moz-right;
-      text-align: -webkit-right;
+      .cta-column {
+        width: fit-content !important;
       }
-      .align-left {
-      text-align: -moz-left;
-      text-align: -webkit-left;
+      .main-cta-btn {
+        padding-right: 16px !important;
       }
+      .secondary-cta-btn {
+        padding-left: 0 !important;
       }
     </mj-style>
   </mj-head>

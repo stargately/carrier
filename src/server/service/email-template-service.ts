@@ -50,19 +50,21 @@ export function mjmlCta(mainCta: Cta, secondaryCta: Cta): string {
   }
   return `
     <mj-section>
-      <mj-column>
-        <mj-button css-class="align-right" href="${mainCta.href}">
+    <mj-group>
+      <mj-column css-class="cta-column">
+        <mj-button align="left" href="${mainCta.href}" css-class="main-cta-btn">
           ${mainCta.content}
         </mj-button>
       </mj-column>
 
       ${
         (secondaryCta.content &&
-          `<mj-column><mj-button css-class="align-left" href="${secondaryCta.href}" background-color="white" color="black" border="solid 1px">
+          `<mj-column css-class="cta-column"><mj-button align="left" href="${secondaryCta.href}" background-color="white" color="black" border="solid 1px" css-class="secondary-cta-btn">
         ${secondaryCta.content}
       </mj-button></mj-column>`) ||
         ""
       }
+      </mj-group>
     </mj-section>`;
 }
 
