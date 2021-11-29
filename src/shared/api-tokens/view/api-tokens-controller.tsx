@@ -5,6 +5,7 @@ import Button from "antd/lib/button";
 import Input from "antd/lib/input";
 import { useUpsertApiTokens } from "@/shared/api-tokens/view/hooks/use-upsert-api-tokens";
 import notification from "antd/lib/notification";
+import { ColorPicker } from "@/shared/common/components/color-picker";
 
 const layout = {
   labelCol: { span: 8 },
@@ -14,13 +15,15 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-export const ApiTokensController = () => {
+export const ApiTokensController = (): JSX.Element => {
   const { data } = useApiTokens();
   const { mutate } = useUpsertApiTokens();
   const onFinish = async (values: Record<string, unknown>) => {
     await mutate({ variables: values });
     notification.success({ message: "updated!" });
   };
+
+  const [color, setColor] = React.useState("#33A68F");
 
   const [form] = Form.useForm();
 
@@ -50,6 +53,10 @@ export const ApiTokensController = () => {
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input.Password />
+      </Form.Item>
+
+      <Form.Item label="themeColor" name="themeColor">
+        <ColorPicker color={color} onChange={setColor} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
