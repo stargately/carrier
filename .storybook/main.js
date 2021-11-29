@@ -20,8 +20,4 @@ module.exports = {
     });
     return config;
   },
-  features: {
-    postcss: false,
-  },
-  staticDirs: ["../src/client/static"],
 };

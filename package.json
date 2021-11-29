@@ -22,7 +22,7 @@
     "kill": "lsof -n -i4TCP:4109 | grep LISTEN | awk '{ print $2 }' | xargs kill",
     "format-i18n": "onefx-format-translations translations",
     "schema:generate": "apollo client:codegen --no-addTypename --target=typescript --localSchemaFile=src/api-gateway/api-gateway.graphql",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./src/client/static -p 6006",
     "build-storybook": "build-storybook"
   },
   "stylelint": {
@@ -80,10 +80,10 @@
   },
   "homepage": "https://github.com/puncsky/template_website#readme",
   "devDependencies": {
-    "@storybook/addon-actions": "6.4.0",
-    "@storybook/addon-essentials": "6.4.0",
-    "@storybook/addon-links": "6.4.0",
-    "@storybook/react": "6.4.0",
+    "@storybook/addon-actions": "6.1.11",
+    "@storybook/addon-essentials": "6.1.11",
+    "@storybook/addon-links": "6.1.11",
+    "@storybook/react": "6.1.11",
     "@types/styletron-engine-atomic": "1.1.0",
     "@typescript-eslint/eslint-plugin": "4.1.0",
     "@typescript-eslint/parser": "4.1.0",
@@ -197,6 +197,7 @@
     "process": "0.11.10",
     "react": "16.13.1",
     "react-apollo": "4.0.0-beta.1",
+    "react-colorful": "^5.5.1",
     "react-dom": "16.13.1",
     "react-helmet": "6.1.0",
     "react-loading-skeleton": "2.1.1",
