@@ -22,7 +22,7 @@
     "kill": "lsof -n -i4TCP:4109 | grep LISTEN | awk '{ print $2 }' | xargs kill",
     "format-i18n": "onefx-format-translations translations",
     "schema:generate": "apollo client:codegen --no-addTypename --target=typescript --localSchemaFile=src/api-gateway/api-gateway.graphql",
-    "storybook": "start-storybook -s ./src/client/static -p 6006",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "stylelint": {
