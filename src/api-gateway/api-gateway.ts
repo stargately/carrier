@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-koa";
 import path from "path";
 import "reflect-metadata";
-import { buildSchema } from "type-graphql";
+import { buildSchema, NonEmptyArray } from "type-graphql";
 import { MyServer } from "@/server/start-server";
 import { OnefxAuth } from "onefx-auth";
 import { Gateways } from "@/server/gateway/gateway";
@@ -25,7 +25,8 @@ export interface IContext {
 }
 
 export async function setApiGateway(server: MyServer): Promise<void> {
-  const resolvers = [
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const resolvers: NonEmptyArray<Function> = [
     MetaResolver,
     EmailTemplateResolver,
     ApiTokensResolver,
