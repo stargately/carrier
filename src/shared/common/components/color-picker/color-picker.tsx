@@ -66,6 +66,7 @@ export const ColorPicker: FC<ColorPickerProps> = ({
             left: "0",
             borderRadius: "9px",
             boxShadow: "0 6px 12px rgba(0,0,0,0.15)",
+            zIndex: 1,
           }}
           ref={popover}
         >

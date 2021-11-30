@@ -18,7 +18,11 @@ export const ManagerTabs: React.FC = () => {
   return (
     <ContentPadding>
       <h1>Template Manager</h1>
-      <Tabs defaultActiveKey={match?.params.tab || "email"} onChange={onChange}>
+      <Tabs
+        defaultActiveKey={match?.params.tab || "email"}
+        onChange={onChange}
+        style={{ overflow: "initial" }}
+      >
         <TabPane tab="Email" key="email">
           <CommonMargin />
           <TemplateManagerController />
