@@ -25,8 +25,8 @@ class ApiTokens {
   @Field(() => String, { nullable: true })
   logoUrl?: string;
 
-  @Field(() => String, { nullable: true })
-  themeColor?: string;
+  @Field(() => String)
+  themeColor: string;
 }
 
 @ArgsType()
@@ -40,8 +40,8 @@ class UpsertTokensRequest {
   @Field(() => String, { nullable: true })
   carrierToken?: string;
 
-  @Field(() => String, { nullable: true })
-  themeColor?: string;
+  @Field(() => String)
+  themeColor: string;
 }
 
 @Resolver()

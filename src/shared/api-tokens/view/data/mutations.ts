@@ -5,7 +5,7 @@ export const upsertApiTokens = gql`
     $_id: String!
     $sendgridApiKey: String
     $carrierToken: String
-    $themeColor: String
+    $themeColor: String!
   ) {
     upsertApiTokens(
       _id: $_id

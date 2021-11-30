@@ -157,11 +157,13 @@ export class EmailTemplateService {
         `${userId}/logo`
       ),
     };
-
+    // retrieve themeColor from apiTokens
     const apiTokens = await this.deps.model.apiTokens.findOne({
       owner: userId,
     });
-
+    if (!apiTokens) {
+      throw new ValidationError("missing api tokens");
+    }
     await this.deps.gateways.sgMail.send({
       to: args.email,
       from: { email: template.fromEmail },
@@ -169,7 +171,7 @@ export class EmailTemplateService {
       html: mjml2html(
         buildMjml(
           template,
-          apiTokens?.themeColor || "",
+          apiTokens.themeColor,
           args.payload as DataPayload,
           meta
         )
@@ -192,13 +194,17 @@ export class EmailTemplateService {
         `${userId}/logo`
       ),
     };
+    // retrieve themeColor from apiTokens
     const apiTokens = await this.deps.model.apiTokens.findOne({
       owner: userId,
     });
+    if (!apiTokens) {
+      throw new ValidationError("missing api tokens");
+    }
     return mjml2html(
       buildMjml(
         template,
-        apiTokens?.themeColor || "",
+        apiTokens.themeColor,
         args.payload as DataPayload,
         meta
       )

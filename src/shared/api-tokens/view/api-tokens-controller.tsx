@@ -6,6 +6,7 @@ import Input from "antd/lib/input";
 import { useUpsertApiTokens } from "@/shared/api-tokens/view/hooks/use-upsert-api-tokens";
 import notification from "antd/lib/notification";
 import { ColorPicker } from "@/shared/common/components/color-picker";
+import { DEFAULT_THEME_COLOR } from "../constants";
 
 const layout = {
   labelCol: { span: 8 },
@@ -23,13 +24,15 @@ export const ApiTokensController = (): JSX.Element => {
     notification.success({ message: "updated!" });
   };
 
-  const [color, setColor] = useState("#33A68F");
+  const [color, setColor] = useState(DEFAULT_THEME_COLOR);
 
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue(data?.apiTokens);
-    setColor(data?.apiTokens?.themeColor || "#33A68F");
+    if (data?.apiTokens?.themeColor) {
+      setColor(data?.apiTokens?.themeColor);
+    }
   }, [data?.apiTokens]);
 
   return (
