@@ -98,6 +98,7 @@
             align="left"
             href="https://example.com"
             css-class="main-cta-btn"
+            background-color="#33A68F"
           >
             Join Meeting
           </mj-button>
