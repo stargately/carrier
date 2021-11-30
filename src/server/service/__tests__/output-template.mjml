@@ -33,6 +33,11 @@
       a, span, td, th { -webkit-font-smoothing: antialiased !important;
       -moz-osx-font-smoothing: grayscale !important; }
     </mj-style>
+    <mj-style>
+      .cta-column { width: fit-content !important; } .main-cta-btn {
+      padding-right: 16px !important; } .secondary-cta-btn { padding-left: 0
+      !important; }
+    </mj-style>
   </mj-head>
   <mj-body background-color="#ffffff">
     <mj-section padding="0px">
@@ -88,8 +93,12 @@
 
     <mj-section>
       <mj-group>
-        <mj-column>
-          <mj-button align="left" href="https://example.com">
+        <mj-column css-class="cta-column">
+          <mj-button
+            align="left"
+            href="https://example.com"
+            css-class="main-cta-btn"
+          >
             Join Meeting
           </mj-button>
         </mj-column>

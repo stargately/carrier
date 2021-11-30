@@ -8,6 +8,7 @@ type ApiTokens {
   carrierToken: String
   logoUrl: String
   sendgridApiKey: String
+  themeColor: String
 }
 
 type EmailMetaTemplate {
@@ -48,6 +49,7 @@ type Mutation {
     _id: String!
     carrierToken: String
     sendgridApiKey: String
+    themeColor: String
   ): ApiTokens
   upsertEmailTemplate(
     description: String!

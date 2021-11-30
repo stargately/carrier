@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useApiTokens } from "@/shared/api-tokens/view/hooks/use-api-tokens";
 import Form from "antd/lib/form";
 import Button from "antd/lib/button";
@@ -23,12 +23,13 @@ export const ApiTokensController = (): JSX.Element => {
     notification.success({ message: "updated!" });
   };
 
-  const [color, setColor] = React.useState("#33A68F");
+  const [color, setColor] = useState("#33A68F");
 
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue(data?.apiTokens);
+    setColor(data?.apiTokens?.themeColor || "#33A68F");
   }, [data?.apiTokens]);
 
   return (

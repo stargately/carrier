@@ -9,6 +9,8 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { UserModel, TUser as User } from "onefx-auth/lib/model/user-model";
 import nanoid58 from "nanoid-base58";
 
+const DEFAULT_THEME_COLOR = "#33A68F";
+
 @modelOptions({ options: { customName: "api_tokens" } })
 export class ApiTokensDoc extends TimeStamps {
   @prop({ default: () => new mongoose.Types.ObjectId() })
@@ -22,6 +24,9 @@ export class ApiTokensDoc extends TimeStamps {
 
   @prop({ default: () => `carrier_${nanoid58()}` })
   carrierToken?: string;
+
+  @prop({ default: DEFAULT_THEME_COLOR })
+  themeColor?: string;
 }
 
 export const ApiTokensModel = getModelForClass(ApiTokensDoc);

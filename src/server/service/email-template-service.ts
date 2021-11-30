@@ -8,6 +8,7 @@ import sgMail from "@sendgrid/mail";
 import mjml2html from "mjml";
 import { formatString } from "@/shared/common/format-string";
 import { AzureSasService } from "@/server/service/azure-sas";
+import { ApiTokensModel } from "@/shared/api-tokens/api-tokens-model";
 
 export function wrapMjmlLines(hydrated = ""): string {
   const wrapLine = (line: string): string =>
@@ -44,7 +45,11 @@ type Cta = {
   href: string | null;
 };
 
-export function mjmlCta(mainCta: Cta, secondaryCta: Cta): string {
+export function mjmlCta(
+  mainCta: Cta,
+  secondaryCta: Cta,
+  themeColor: string
+): string {
   if (!mainCta.content) {
     return "";
   }
@@ -52,7 +57,9 @@ export function mjmlCta(mainCta: Cta, secondaryCta: Cta): string {
     <mj-section>
     <mj-group>
       <mj-column css-class="cta-column">
-        <mj-button align="left" href="${mainCta.href}" css-class="main-cta-btn">
+        <mj-button align="left" href="${
+          mainCta.href
+        }" css-class="main-cta-btn" background-color=${themeColor}>
           ${mainCta.content}
         </mj-button>
       </mj-column>
@@ -86,6 +93,7 @@ type DataPayload = {
 
 export function buildMjml(
   template: EmailTemplate,
+  themeColor: string,
   dataPayload: DataPayload,
   metaPayload: MetaPayload
 ): string {
@@ -94,7 +102,8 @@ export function buildMjml(
     mainContent: wrapMjmlLines(formatString(template.mainContent, dataPayload)),
     cta: mjmlCta(
       parseCta(formatString(template.mainCta, dataPayload)),
-      parseCta(formatString(template.secondaryCta, dataPayload))
+      parseCta(formatString(template.secondaryCta, dataPayload)),
+      themeColor
     ),
     secondaryContent: wrapMjmlLines(
       formatString(template.secondaryContent, dataPayload)
@@ -104,7 +113,10 @@ export function buildMjml(
 }
 
 type Deps = {
-  model: { emailTemplate: typeof EmailTemplateModel };
+  model: {
+    emailTemplate: typeof EmailTemplateModel;
+    apiTokens: typeof ApiTokensModel;
+  };
   gateways: {
     sgMail: typeof sgMail;
   };
@@ -145,12 +157,23 @@ export class EmailTemplateService {
         `${userId}/logo`
       ),
     };
+
+    const apiTokens = await this.deps.model.apiTokens.findOne({
+      owner: userId,
+    });
+
     await this.deps.gateways.sgMail.send({
       to: args.email,
       from: { email: template.fromEmail },
       subject: template.subject,
-      html: mjml2html(buildMjml(template, args.payload as DataPayload, meta))
-        .html,
+      html: mjml2html(
+        buildMjml(
+          template,
+          apiTokens?.themeColor || "",
+          args.payload as DataPayload,
+          meta
+        )
+      ).html,
       text: template.plainTextBody,
     });
   }
@@ -169,8 +192,17 @@ export class EmailTemplateService {
         `${userId}/logo`
       ),
     };
-    return mjml2html(buildMjml(template, args.payload as DataPayload, meta))
-      .html;
+    const apiTokens = await this.deps.model.apiTokens.findOne({
+      owner: userId,
+    });
+    return mjml2html(
+      buildMjml(
+        template,
+        apiTokens?.themeColor || "",
+        args.payload as DataPayload,
+        meta
+      )
+    ).html;
   }
 
   async getExampleDataPayload(
