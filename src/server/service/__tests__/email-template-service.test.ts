@@ -39,7 +39,9 @@ test("build template", async (t) => {
     secondaryCta: "",
   };
 
-  const mjml = buildMjml(template, dataPayload, {
+  const FAKE_THEME_COLOR = "#33A68F";
+
+  const mjml = buildMjml(template, FAKE_THEME_COLOR, dataPayload, {
     _logo: "https://dashboard.daommo.com/logo-text.png",
   });
 

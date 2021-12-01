@@ -24,6 +24,9 @@ class ApiTokens {
 
   @Field(() => String, { nullable: true })
   logoUrl?: string;
+
+  @Field(() => String)
+  themeColor: string;
 }
 
 @ArgsType()
@@ -36,6 +39,9 @@ class UpsertTokensRequest {
 
   @Field(() => String, { nullable: true })
   carrierToken?: string;
+
+  @Field(() => String)
+  themeColor: string;
 }
 
 @Resolver()
@@ -47,6 +53,7 @@ export class ApiTokensResolver {
     if (tokens) {
       return tokens;
     }
+    // @ts-ignore
     return ctx.model.apiTokens.create({ owner: ctx.userId });
   }
 

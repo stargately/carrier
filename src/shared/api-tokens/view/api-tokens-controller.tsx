@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useApiTokens } from "@/shared/api-tokens/view/hooks/use-api-tokens";
 import Form from "antd/lib/form";
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
 import { useUpsertApiTokens } from "@/shared/api-tokens/view/hooks/use-upsert-api-tokens";
 import notification from "antd/lib/notification";
+import { ColorPicker } from "@/shared/common/components/color-picker";
+import { DEFAULT_THEME_COLOR } from "../constants";
 
 const layout = {
   labelCol: { span: 8 },
@@ -14,7 +16,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-export const ApiTokensController = () => {
+export const ApiTokensController = (): JSX.Element => {
   const { data } = useApiTokens();
   const { mutate } = useUpsertApiTokens();
   const onFinish = async (values: Record<string, unknown>) => {
@@ -22,10 +24,15 @@ export const ApiTokensController = () => {
     notification.success({ message: "updated!" });
   };
 
+  const [color, setColor] = useState(DEFAULT_THEME_COLOR);
+
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue(data?.apiTokens);
+    if (data?.apiTokens?.themeColor) {
+      setColor(data?.apiTokens?.themeColor);
+    }
   }, [data?.apiTokens]);
 
   return (
@@ -50,6 +57,10 @@ export const ApiTokensController = () => {
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input.Password />
+      </Form.Item>
+
+      <Form.Item label="themeColor" name="themeColor">
+        <ColorPicker color={color} onChange={setColor} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
