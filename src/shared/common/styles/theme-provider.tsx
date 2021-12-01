@@ -8,6 +8,7 @@ import {
 import { actionSetTheme as setTheme } from "../base-reducer";
 import { colors } from "./style-color";
 
+// @ts-ignore
 export const THEME: Theme = {
   colors,
   sizing: ["2px", "6px", "10px", "16px", "24px", "32px"],

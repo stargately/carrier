@@ -51,7 +51,7 @@ module.exports = {
     "connect-src": [
       "self",
       "https://www.google-analytics.com/",
-      "https://carrier.onrender.com/carrier/api-gateway/",
+      ...(process.env.API_GATEWAY_URL ? [process.env.API_GATEWAY_URL] : []),
       "https://beancountstore.blob.core.windows.net/",
     ],
     "child-src": ["self"],

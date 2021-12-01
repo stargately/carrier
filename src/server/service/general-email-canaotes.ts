@@ -38,6 +38,17 @@ export const getGeneralEmailCanaotes = (
     <mj-style>
       a, span, td, th { -webkit-font-smoothing: antialiased !important; -moz-osx-font-smoothing: grayscale !important; }
     </mj-style>
+    <mj-style>
+      .cta-column {
+        width: fit-content !important;
+      }
+      .main-cta-btn {
+        padding-right: 16px !important;
+      }
+      .secondary-cta-btn {
+        padding-left: 0 !important;
+      }
+    </mj-style>
   </mj-head>
   <mj-body background-color="#ffffff">
 
