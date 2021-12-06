@@ -1,5 +1,4 @@
 import Input from "antd/lib/input";
-import { styled } from "onefx/lib/styletron-react";
 import React, {
   FC,
   useState,
@@ -10,10 +9,6 @@ import React, {
 } from "react";
 import { useEventCallback } from "../hooks/use-event-callback";
 import { ColorInputBaseProps } from "./types";
-
-const StyledInput = styled(Input, {
-  paddingLeft: "32px",
-});
 
 type ColorInputProps = ColorInputBaseProps & {
   /** block typing invalid characters and limits string length */
@@ -70,12 +65,13 @@ export const ColorInput: FC<ColorInputProps> = (props): JSX.Element => {
   }, [color, escape]);
 
   return (
-    <StyledInput
+    <Input
       {...rest}
       value={format ? format(value) : value}
       spellCheck="false"
       onChange={handleChange}
       onBlur={handleBlur}
+      style={{ paddingLeft: "32px" }}
     />
   );
 };
