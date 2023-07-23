@@ -8,7 +8,10 @@ export function formatString(
 
   let processed = str;
   Object.keys(data).forEach((key) => {
-    processed = processed.replace(`\${${key}}`, data[key] || "");
+    processed = processed.replace(
+      new RegExp(`\\$\\{${key}\\}`, "g"),
+      data[key] || ""
+    );
   });
 
   return processed || "";

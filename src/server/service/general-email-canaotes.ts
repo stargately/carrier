@@ -25,11 +25,11 @@ export const getGeneralEmailCanaotes = (
   <mj-head>
     <mj-title>\${subject}</mj-title>
     <mj-attributes>
-      <mj-button border-radius="4px" text-transform="capitalize" font-weight="bold" font-size="14px" line-height="16.41px" background-color="#33A68F" color="#ffffff"></mj-button>
-      <mj-all font-size="14px" line-height="16.41px" font-family="Roboto, Helvetica, Arial, sans-serif"></mj-all>
-      <mj-text font-weight="400" font-size="14px" color="#434245" line-height="16.41px"></mj-text>
+      <mj-button border-radius="4px" text-transform="capitalize" font-weight="bold" font-size="16px" line-height="30px" background-color="#33A68F" color="#ffffff"></mj-button>
+      <mj-all font-size="16px" line-height="24px" font-family="Roboto, Helvetica, Arial, sans-serif"></mj-all>
+      <mj-text font-weight="400" font-size="16px" color="#434245" line-height="24px"></mj-text>
       <mj-class font-weight="bold" name="heading" />
-      <mj-class color="#999" name="footer-text" font-size="14px" />
+      <mj-class color="#999" name="footer-text" font-size="16px" />
 
     </mj-attributes>
     <mj-style inline="inline">

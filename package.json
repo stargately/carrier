@@ -102,7 +102,6 @@
     "gulp-less": "4.0.1",
     "gulp-livereload": "4.0.2",
     "gulp-nodemon": "2.5.0",
-    "gulp-sass": "4.1.0",
     "husky": "4.3.0",
     "less": "3.13.1",
     "less-loader": "7.2.1",
@@ -115,14 +114,12 @@
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-recess-order": "2.1.0",
     "stylelint-config-standard": "20.0.0",
-    "sw-precache-webpack-plugin": "1.0.0",
-    "terser-webpack-plugin": "4.2.0",
     "ts-loader": "8.0.3",
-    "tsconfig-paths-webpack-plugin": "3.3.0",
-    "webpack": "4.44.1",
-    "webpack-bundle-analyzer": "3.8.0",
-    "webpack-cli": "3.3.12",
-    "webpack-manifest-plugin": "2.2.0"
+    "tsconfig-paths-webpack-plugin": "3.5.1",
+    "webpack": "^5.40.0",
+    "webpack-bundle-analyzer": "4.4.2",
+    "webpack-cli": "4.7.2",
+    "webpack-manifest-plugin": "3.1.1"
   },
   "dependencies": {
     "@ant-design/icons": "4.2.2",
@@ -163,7 +160,6 @@
     "@types/uuid": "8.3.0",
     "@types/validator": "13.1.0",
     "antd": "4.6.3",
-    "apollo": "2.32.5",
     "apollo-link-timeout": "2.0.1",
     "apollo-server-errors": "2.4.2",
     "apollo-server-koa": "2.21.0",
@@ -192,7 +188,7 @@
     "mongoose": "5.10.5",
     "nanoid-base58": "0.1.0",
     "onefx": "2.6.8",
-    "onefx-auth": "2.4.3",
+    "onefx-auth": "2.6.9",
     "polished": "4.0.5",
     "process": "0.11.10",
     "react": "16.13.1",
@@ -220,9 +216,6 @@
     "typescript": "4.0.2",
     "uuid": "8.3.0",
     "validator": "13.1.1"
-  },
-  "engines": {
-    "node": "14.15.4"
   },
   "private": true
 }
