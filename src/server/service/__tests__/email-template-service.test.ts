@@ -29,10 +29,12 @@ test("build template", async (t) => {
     dateTime: "Aug 2, 2020, Thursday, 2pm - 3pm Pacific Time",
     sender: "David Fink",
     senderCompany: "Fantastic Company",
+    senderName: "1",
+    receiptNumber: "222-2222",
   };
 
   const template = {
-    subject: "New Meeting Request",
+    subject: "Your receipt from ${senderName} #${receiptNumber}",
     mainContent: testHydrated,
     mainCta: `[Join Meeting](https://example.com)`,
     secondaryContent: `Best,<br/>\${sender}<br/>\${senderCompany}`,

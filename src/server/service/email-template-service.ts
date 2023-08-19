@@ -167,7 +167,7 @@ export class EmailTemplateService {
     await this.deps.gateways.sgMail.send({
       to: args.email,
       from: { email: template.fromEmail },
-      subject: template.subject,
+      subject: formatString(template.subject, args.payload as any),
       html: mjml2html(
         buildMjml(
           template,
